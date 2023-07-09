@@ -1,0 +1,52 @@
+D:\GIT_Repos\homework\features>behave Person_API.feature
+Feature: Validate CRUD methods for Person model object # Person_API.feature:1
+
+  Scenario: Validate the POST API for adding a non-existing person                   # Person_API.feature:3
+    Given Set API endpoint as "/add"                                                 # steps/Person_API_test.py:11
+    And Body with non-existing person details                                        # steps/Person_API_test.py:16
+    When Send a POST HTTP request                                                    # steps/Person_API_test.py:36
+    Then Receive status "True" and Response message as "Person created successfully" # steps/Person_API_test.py:48
+
+  Scenario: Validate the POST API for adding an existing person                 # Person_API.feature:9
+    Given Set API endpoint as "/add"                                            # steps/Person_API_test.py:11
+    And Body with existing person details                                       # steps/Person_API_test.py:27
+    When Send a POST HTTP request                                               # steps/Person_API_test.py:36
+    Then Receive status "False" and Response message as "Person Already Exists" # steps/Person_API_test.py:48
+
+  Scenario: Validate the GET API for deleting an existing person                     # Person_API.feature:16
+    Given Set API endpoint as "/4/delete"                                            # steps/Person_API_test.py:11
+    When Send a GET HTTP request                                                     # steps/Person_API_test.py:42
+    Then Receive status "True" and Response message as "Person deleted successfully" # steps/Person_API_test.py:48
+
+  Scenario: Validate the GET API for deleting a non-existing person             # Person_API.feature:21
+    Given Set API endpoint as "/9876/delete"                                    # steps/Person_API_test.py:11
+    When Send a GET HTTP request                                                # steps/Person_API_test.py:42
+    Then Receive status "False" and Response message as "Person Doesn't Exists" # steps/Person_API_test.py:48
+
+  Scenario: Validate the GET API to fetch details of an existing person  # Person_API.feature:27
+    Given Set API endpoint as "/2/get"                                   # steps/Person_API_test.py:11
+    When Send a GET HTTP request                                         # steps/Person_API_test.py:42
+    Then Receive response as "not null"                                  # steps/Person_API_test.py:58
+    And valid Person object                                              # steps/Person_API_test.py:68
+
+  Scenario: Validate the GET API to fetch details of a non-existing person  # Person_API.feature:33
+    Given Set API endpoint as "/9899/get"                                   # steps/Person_API_test.py:11
+    When Send a GET HTTP request                                            # steps/Person_API_test.py:42
+    Then Receive response as "null"                                         # steps/Person_API_test.py:58
+
+  Scenario: Validate the GET API to fetch dummy person details  # Person_API.feature:39
+    Given Set API endpoint as "/9874/getDummy"                  # steps/Person_API_test.py:11
+    When Send a GET HTTP request                                # steps/Person_API_test.py:42
+    Then Receive response as "not null"                         # steps/Person_API_test.py:58
+    And valid Person object                                     # steps/Person_API_test.py:68
+    And valid dummy values                                      # steps/Person_API_test.py:73
+
+  Scenario: Validate the GET API to fetch all person details  # Person_API.feature:47
+    Given Set API endpoint as "/getAll"                       # steps/Person_API_test.py:11
+    When Send a GET HTTP request                              # steps/Person_API_test.py:42
+    Then validate response for all Person object              # steps/Person_API_test.py:80
+
+1 feature passed, 0 failed, 0 skipped
+8 scenarios passed, 0 failed, 0 skipped
+29 steps passed, 0 failed, 0 skipped, 0 undefined
+Took 0m0.056s
